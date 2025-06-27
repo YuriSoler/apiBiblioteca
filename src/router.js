@@ -1,10 +1,17 @@
 import { Router } from "express";
 
-import { getLivros, createLivros } from "./controllers/LivrosController.js";
+import {
+  getLivros,
+  createLivros,
+  deleteLivros,
+  attLivros,
+} from "./controllers/LivrosController.js";
 
-const routes = Router();
+const router = Router();
 
-routes.get("/livro", getLivros);
-routes.post("livro", createLivros);
+router.get("/livro", getLivros);
+router.post("/livro", createLivros);
+router.put("/livro/:id", attLivros);
+router.delete("/livro/:id", deleteLivros);
 
-export default routes;
+export default router;
