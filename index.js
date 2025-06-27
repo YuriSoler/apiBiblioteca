@@ -1,11 +1,28 @@
 import express from "express";
 import mongoose from "mongoose";
 
+import Livro from "./models/Livro.js";
+
 const app = express();
 const PORT = 3001;
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
+// Middleware para ler JSON
+app.use(express.json());
+
+// Listando os Livros
+app.get("/livro", async (req, res) => {
+  const Livros = await Livro.find();
+
+  return res.status(200).json(Livros);
+});
+
+// Adição de Livro ao banco de dados (MongoDB)
+app.post("/livro", async (req, res) => {
+  const livro = req.body;
+
+  const newLivro = await Livro.create(livro);
+
+  return res.status(201).json(newLivro);
 });
 
 mongoose
