@@ -28,25 +28,39 @@ async function getLivrosById(req, res) {
 
 // Função para Adicionar "Livros" no banco de dados
 async function createLivros(req, res) {
-  const livro = req.body;
+  const { title, author } = req.body;
 
-  const newLivro = await Livro.create(livro);
+  // Validação
+  if (!title || !author) {
+    return res
+      .status(400)
+      .json({ error: "Os campos 'title' e 'author' são obrigatórios." });
+  }
 
-  return res.status(201).json(newLivro);
+  try {
+    const newLivro = await Livro.create({ title, author });
+    return res.status(201).json(newLivro);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
 }
 
 // Atualizar livro (ID)
 async function attLivros(req, res) {
   const id = req.params.id;
-  const dadosAtualizados = req.body;
+  const { title, author } = req.body;
+
+  if (!title || !author) {
+    return res
+      .status(400)
+      .json({ error: "Os campos 'title' e 'author' são obrigatórios." });
+  }
 
   try {
     const livroAtualizado = await Livro.findByIdAndUpdate(
       id,
-      dadosAtualizados,
-      {
-        new: true, // Retorna o Livro atualizado
-      }
+      { title, author },
+      { new: true } // Retorna o livro atualizado
     );
 
     if (!livroAtualizado) {
