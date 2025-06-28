@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-// Definindo o schema do livro
+// Define o schema do livro
 const livroSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -16,5 +16,5 @@ const livroSchema = new mongoose.Schema({
   },
 });
 
-// Criando o modelo Livro baseado no schema
+// Cria o modelo Livro baseado no schema
 export default mongoose.model("Livros", livroSchema);
